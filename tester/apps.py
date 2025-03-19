@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 from django.core.exceptions import AppRegistryNotReady
-
+import subprocess
 
 class TesterConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'

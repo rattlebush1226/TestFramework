@@ -2,9 +2,10 @@ import json
 import requests
 from django.utils import timezone
 from .models import TestCase, TestResult
+import subprocess
 
 
-def run_curl_preparation(curl_commands):
+def run_curl_preparation(curl_commands, test_case):
     results = []
     for cmd in curl_commands.split('\n'):
         cmd = cmd.strip()
@@ -24,6 +25,10 @@ def run_curl_preparation(curl_commands):
         except subprocess.CalledProcessError as e:
             results.append(f"[FAIL] {cmd}\nExit Code: {e.returncode}\nError: {e.stderr}")
             raise  # 中止后续执行
+
+    # 将curl命令的返回值存储到TestCase模型中
+    test_case.curl_preparation_result = '\n\n'.join(results)
+    test_case.save()
     return '\n\n'.join(results)
 
 
@@ -36,7 +41,7 @@ def run_test_suite(queryset=None):
         prep_result = ""
         try:
             if case.curl_preparation:
-                prep_result = run_curl_preparation(case.curl_preparation)
+                prep_result = run_curl_preparation(case.curl_preparation, case)
 
             headers = json.loads(case.headers) if case.headers else {}
             data = json.loads(case.body) if case.body else None

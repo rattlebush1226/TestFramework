@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import TestResult
+import subprocess
 
 def test_report(request):
     results = TestResult.objects.all().order_by('-run_time')
