@@ -1,25 +1,15 @@
-// TestFramework/static/js/date_to_timestamp.js
+document.addEventListener('DOMContentLoaded', function() {
+    const generateButton = document.getElementById('generate-timestamp-button');
+    const dateInput = document.getElementById('date-input'); // 假设日期输入框的 id 为 date-input
+    const timestampOutput = document.getElementById('timestamp-output'); // 假设时间戳输出框的 id 为 timestamp-output
 
-document.addEventListener('DOMContentLoaded', function () {
-    const dateInput = document.getElementById('id_date_input');
-    const timestampOutput = document.getElementById('id_timestamp_output');
-
-    if (dateInput && timestampOutput) {
-        const generateButton = document.createElement('button');
-        generateButton.textContent = '生成时间戳';
-        generateButton.id = 'generate_timestamp_button';
-
-        // 将按钮插入到日期输入框后面
-        dateInput.parentNode.insertBefore(generateButton, dateInput.nextSibling);
-
-        generateButton.addEventListener('click', function () {
-            const date = new Date(dateInput.value);
-            const timestamp = date.getTime();
-            if (!isNaN(timestamp)) {
-                timestampOutput.value = timestamp;
-            } else {
-                timestampOutput.value = '无效日期';
-            }
-        });
-    }
+    generateButton.addEventListener('click', function() {
+        const dateValue = dateInput.value;
+        const timestamp = new Date(dateValue).getTime();
+        if (!isNaN(timestamp)) {
+            timestampOutput.value = timestamp;
+        } else {
+            timestampOutput.value = '无效日期';
+        }
+    });
 });

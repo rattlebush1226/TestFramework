@@ -119,12 +119,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
 # 静态文件查找目录，如果有额外的静态文件目录，可以在这里配置
 STATICFILES_DIRS = [
     # 例如：BASE_DIR / 'static'
-    BASE_DIR / 'static'
 ]
 
+# 收集静态文件的目录
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
